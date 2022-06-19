@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Construction extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['name', 'type', 'user_id'];
 
     public function orders()
     {
@@ -17,6 +17,6 @@ class Construction extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

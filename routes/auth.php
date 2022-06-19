@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ConstructionsController;
+use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -53,4 +55,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::resource('/constructions', ConstructionsController::class)
+        ->only(['index', 'create', 'store', 'destroy']);
+
+    Route::get('/constructions/{constructions}/orders', [OrdersController::class, 'index'])->name('orders.index');
+
+    Route::get('/constructions/{constructions}/orders/create', [OrdersController::class, 'create'])->name('orders.create');
+
+    Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
+
+    Route::get('/orders/{orders}/edit', [OrdersController::class, 'edit'])->name('orders.edit');
+
+    Route::put('/orders/{orders}', [OrdersController::class, 'update'])->name('orders.update');
+
+    Route::delete('/orders/{orders}', [OrdersController::class, 'destroy'])->name('orders.destroy');
 });

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
-    protected $fillable = ['quantity', 'price'];
+    protected $fillable = ['quantity', 'price', 'material_id', 'order_id'];
 
     public function material()
     {
-        return $this->hasOne(Material::class,'material_id');
+        return $this->hasOne(Material::class,'id', 'material_id');
     }
 
     public function order()

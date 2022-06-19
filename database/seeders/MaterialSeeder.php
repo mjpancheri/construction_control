@@ -45,5 +45,38 @@ class MaterialSeeder extends Seeder
         DB::table('materials')->insert([
             'name' => 'Ferramentas',
         ]);
+        DB::table('materials')->insert([
+            'name' => 'Caçamba',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Betoneira',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Aluguel ferramentas',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Portas e janelas',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Mão de obra - alvenaria',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Mão de obra - gesso',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Mão de obra - vidro',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Mão de obra - elétrica',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Mão de obra - hidráulica',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Pedras e granitos',
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Arquiteto/engenheiro',
+        ]);
     }
 }
