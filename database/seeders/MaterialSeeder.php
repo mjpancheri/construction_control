@@ -81,5 +81,8 @@ class MaterialSeeder extends Seeder
         DB::table('materials')->insert([
             'name' => 'Material elétrico',
         ]);
+        DB::table('materials')->insert([
+            'name' => 'Material hidráulico',
+        ]);
     }
 }
