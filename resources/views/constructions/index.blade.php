@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="flex justify-between mt-2">
-                <x-button-link-cancel href="/dashboard" class="rounded bg-gray-500 py-3 px-4">Voltar</x-button-link-cancel>
+                <x-button-link-cancel href="/dashboard">Voltar</x-button-link-cancel>
                 <x-button-link href="{{ route('constructions.create') }}">Nova construção/reforma</x-button-link>
             </div>
         </div>
