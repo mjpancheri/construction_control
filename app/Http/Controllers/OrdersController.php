@@ -52,7 +52,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $price = (int)(floatval(str_replace(',', '.', $request->price)) * 100);
+        $price = $this->parsePrices($request->price);
         $quantity = intval($request->quantity);
 
         $order = Order::create([
@@ -95,7 +95,7 @@ class OrdersController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::where('id', $id)->first();
-        $price = (int)(floatval(str_replace(',', '.', $request->price)) * 100);
+        $price = $this->parsePrices($request->price);
         $quantity = intval($request->quantity);
         $materialId = intval($request->material);
 
@@ -123,5 +123,15 @@ class OrdersController extends Controller
         $order = Order::where('id', $id)->first();
         $order->delete();
         return to_route('orders.index', $order->construction->id);
+    }
+
+    private function parsePrices($values): int
+    {
+        $prices = explode('+', $values);
+        $total = 0;
+        foreach ($prices as $price) {
+            $total += floatval(str_replace(',', '.', $price));
+        }
+        return (int)($total * 100);
     }
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Atualizar pedido para {{ $order->construction->name }}
+            Atualizar pedido ({{ $order->date }}) para {{ $order->construction->name }}
         </h2>
     </x-slot>
 
@@ -34,7 +34,7 @@
                             </x-select>
                         </div>
                         <div>
-                            <x-label for="price" :value="'Preço'" />
+                            <x-label for="price">Preço (use + para somar valores)</x-label>
                             <x-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price')" required />
                         </div>
                         <div>

@@ -26,7 +26,7 @@
                             </x-select>
                         </div>
                         <div>
-                            <x-label for="price" :value="'Preço'" />
+                            <x-label for="price">Preço (use + para somar valores)</x-label>
                             <x-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price')" required />
                         </div>
                         <div>
