@@ -150,11 +150,11 @@ class OrdersController extends Controller
                 $report[$item->material->id] = [
                     'name' => $item->material->name,
                     'quantity' => $item->quantity,
-                    'price' => $item->price,
+                    'price' => ($item->price * $item->quantity),
                 ];
             } else {
                 $report[$item->material->id]['quantity'] += $item->quantity;
-                $report[$item->material->id]['price'] += $item->price;
+                $report[$item->material->id]['price'] += ($item->price * $item->quantity);
             }
         }
 
