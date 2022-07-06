@@ -25,7 +25,7 @@ class Order extends Model
     protected static function booted()
     {
         self::addGlobalScope('ordered', function (Builder $queryBuilder) {
-            $queryBuilder->orderBy('date');
+            $queryBuilder->orderBy('date', 'desc');
         });
     }
 }

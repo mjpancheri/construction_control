@@ -134,4 +134,33 @@ class OrdersController extends Controller
         }
         return (int)($total * 100);
     }
+
+    /**
+     * Display a report of costs per item.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function report($id)
+    {
+        $construction = Construction::where('id', $id)->first();
+        $orders = $construction->orders;
+        $report = [];
+        foreach (Item::whereIn('order_id', $orders->pluck('id'))->get() as $item) {
+            if (!isset($report[$item->material->id])) {
+                $report[$item->material->id] = [
+                    'name' => $item->material->name,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                ];
+            } else {
+                $report[$item->material->id]['quantity'] += $item->quantity;
+                $report[$item->material->id]['price'] += $item->price;
+            }
+        }
+
+        return view('orders.report')
+            ->with('constructionId', $construction->id)
+            ->with('constructionName', $construction->name)
+            ->with('report', $report);
+    }
 }

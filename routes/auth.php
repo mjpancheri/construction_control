@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/constructions', ConstructionsController::class)
         ->only(['index', 'create', 'store', 'destroy']);
 
+    Route::get('/constructions/{constructions}/report', [OrdersController::class, 'report'])->name('orders.report');
+
     Route::get('/constructions/{constructions}/orders', [OrdersController::class, 'index'])->name('orders.index');
 
     Route::get('/constructions/{constructions}/orders/create', [OrdersController::class, 'create'])->name('orders.create');

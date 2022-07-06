@@ -15,6 +15,9 @@
                                 <a href="{{ route('orders.index', $construction->id) }}">
                                     {{ Str::ucfirst($construction->name) }} ({{ $construction->type == 'RENOVATION' ? 'reforma' : 'construção' }}) - {{ $construction->created_at->format('d/m/Y H:i') }}
                                 </a>
+                                <a href="{{ route('orders.report', $construction->id) }}">
+                                    Ver gastos por material
+                                </a>
                                 <form action="{{ route('constructions.destroy', $construction->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
