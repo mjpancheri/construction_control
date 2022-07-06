@@ -157,7 +157,7 @@ class OrdersController extends Controller
                 $report[$item->material->id]['price'] += ($item->price * $item->quantity);
             }
         }
-
+        asort($report);
         return view('orders.report')
             ->with('constructionId', $construction->id)
             ->with('constructionName', $construction->name)
