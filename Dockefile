@@ -1,0 +1,53 @@
+FROM php:8.1-fpm
+
+LABEL MAINTAINER marcio.pancheri <mjpancheri@gmail.com>
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+# Define the php as development settings
+RUN cp -v /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+
+RUN apt-get update \
+  && apt-get install -y \
+    sudo \
+    build-essential \
+    libmariadb-dev \
+    mariadb-client \
+    unzip \
+    libfreetype-dev \
+    libfreetype6-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libzip-dev \
+    libicu-dev \
+  && docker-php-ext-install bcmath \
+  && docker-php-ext-configure intl \
+  && docker-php-ext-install intl \
+  && docker-php-ext-configure gd --with-freetype --with-jpeg \
+  && docker-php-ext-install gd \
+  && docker-php-ext-install zip \
+  && docker-php-ext-install mysqli \
+  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer --2.3 \
+  && groupadd --gid ${GROUP_ID} app \
+  && useradd --system --create-home --no-log-init --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo app \
+  && mkdir /var/app && chown -R app:app /var/app \
+  && echo "app ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER app
+
+# Install node for app user
+ENV NVM_DIR /home/app/.nvm
+ENV NODE_VERSION 14.20.1
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+  && . ~/.nvm/nvm.sh \
+  && nvm install ${NODE_VERSION} \
+  && nvm alias default ${NODE_VERSION} \
+  && nvm use default
+ENV NODE_PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/lib/node_modules
+ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin:${PATH}
+
+# Install the mysql pdo
+RUN sudo -E docker-php-ext-install pdo_mysql
+
+WORKDIR /var/app

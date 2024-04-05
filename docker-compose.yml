@@ -1,0 +1,36 @@
+version: "3"
+
+networks:
+    local:
+        name: local
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    command: php artisan serve --host="0.0.0.0"
+    environment:
+      - DB_HOST=database
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    depends_on:
+      - database
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/var/app
+
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+        - '3306:3306'
+    volumes:
+        - ../database:/var/lib/mysql
+    networks:
+        - local
